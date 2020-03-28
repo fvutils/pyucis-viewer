@@ -1,0 +1,9 @@
+
+ivpm
+pyqt5
+pylint
+flake8
+pytest
+pytest-cov
+-e git+https://github.com/fvutils/pyucis.git#egg=pyucis
+
