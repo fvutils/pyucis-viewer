@@ -5,5 +5,5 @@
 <path>/${PROJECT_DIR_NAME}/packages/pyucis/src</path>
 </pydev_pathproperty>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python interpreter</pydev_property>
-<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+<pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">pyucis-viewer</pydev_property>
 </pydev_project>
