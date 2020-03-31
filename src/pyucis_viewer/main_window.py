@@ -3,8 +3,12 @@ Created on Mar 28, 2020
 
 @author: ballance
 '''
-from PyQt5.Qt import QWidget, QHBoxLayout, QTreeView
-from PyQt5.QtWidgets import QLabel, QGroupBox, QGridLayout, QSplitter
+import sys
+
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.Qt import QWidget, QHBoxLayout, QTreeView, QMainWindow, QIcon
+from PyQt5.QtWidgets import QLabel, QGroupBox, QGridLayout, QSplitter, QAction
+from PyQt5.uic.Compiler.qtproxies import QtGui
 
 from pyucis_viewer.coverage_tree_model import CoverageTreeModel
 from pyucis_viewer.data_model import DataModel
@@ -13,7 +17,7 @@ from pyucis_viewer.instance_tree import InstanceTree
 from pyucis_viewer.instance_tree_model import InstanceTreeModel
 
 
-class MainWindow(QWidget, DataModelListener):
+class MainWindow(QMainWindow, DataModelListener):
     
     def __init__(self, data_model : DataModel):
         super().__init__()
@@ -26,7 +30,17 @@ class MainWindow(QWidget, DataModelListener):
         self.setWindowTitle("PyUCIS Viewer")
         self.setGeometry(10, 10, width, height)
         
-        self.splitter = QSplitter()
+        self.statusBar()
+        
+        mainMenu = self.menuBar()
+        fileMenu = mainMenu.addMenu("&File")
+        
+        exitAction = QAction(QIcon('exit.png'), "E&xit", self)
+        exitAction.triggered.connect(self.do_exit)
+        fileMenu.addAction(exitAction)
+        
+        
+#         self.splitter = QSplitter()
         
         
 #        self.horizontalGroupBox = QGroupBox(self)
@@ -34,26 +48,30 @@ class MainWindow(QWidget, DataModelListener):
 #        layout.setColumnStretch(1, 4)
 #        layout.setColumnStretch(2, 4)
 
-        layout = QHBoxLayout()
+#        layout = QHBoxLayout()
 
 
-        self.instTreeModel = InstanceTreeModel()
-        self.data_model.add_listener(self.instTreeModel)
-        self.instTreeView = QTreeView()
-        self.instTreeView.setModel(self.instTreeModel)
-        self.splitter.addWidget(self.instTreeView)
+#         self.instTreeModel = InstanceTreeModel()
+#         self.data_model.add_listener(self.instTreeModel)
+#         self.instTreeView = QTreeView()
+#         self.instTreeView.setModel(self.instTreeModel)
+#         self.splitter.addWidget(self.instTreeView)
 
         self.coverageTreeModel = CoverageTreeModel()
         self.data_model.add_listener(self.coverageTreeModel)
         self.coverageTree = QTreeView()
+        self.progress_delegate = MainWindow.ProgressDelegate(self.coverageTree)
+        self.coverageTree.setItemDelegateForColumn(2, self.progress_delegate)
         self.coverageTree.setModel(self.coverageTreeModel)
-        self.splitter.addWidget(self.coverageTree)
+        self.coverageTree.show()
+#        self.splitter.addWidget(self.coverageTree)
         
-        layout.addWidget(self.splitter)
-        self.setLayout(layout)
+#        layout.addWidget(self.coverageTree)
+#        self.setLayout(layout)
+        self.setCentralWidget(self.coverageTree)
 
         # Set the initial split to 30/70        
-        self.splitter.setSizes([int(width*0.3), int(width*0.7)])
+#        self.splitter.setSizes([int(width*0.3), int(width*0.7)])
 #        layout.addWidget(self.splitter, 0, 0)
         
 #        self.horizontalGroupBox.setLayout(layout)
@@ -62,3 +80,20 @@ class MainWindow(QWidget, DataModelListener):
 
     def data_loaded(self, db):
         pass
+    
+    def do_exit(self):
+        print("Exit")
+        sys.exit()
+        
+    class ProgressDelegate(QtWidgets.QStyledItemDelegate):
+        def paint(self, painter, option, index):
+            progress = index.data(QtCore.Qt.UserRole+1000)
+            opt = QtWidgets.QStyleOptionProgressBar()
+            opt.rect = option.rect
+            opt.minimum = 0
+            opt.maximum = 100
+            opt.progress = progress
+            opt.text = "{}%".format(progress)
+            opt.textVisible = True
+            QtWidgets.QApplication.style().drawControl(QtWidgets.QStyle.CE_ProgressBar, opt, painter)
+        

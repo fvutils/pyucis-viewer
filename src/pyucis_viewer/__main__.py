@@ -25,6 +25,10 @@ def main():
 
     app = QApplication(sys.argv)    
     main_win = MainWindow(data_model)
+    
+    # Notify everyone that a new database is available
+    data_model.load(None)
+    
     sys.exit(app.exec_())
     
 

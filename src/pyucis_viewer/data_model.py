@@ -21,6 +21,6 @@ class DataModel(object):
     def load(self, db):
         """Load new UCIS database"""
         
-        for l in self.listeners():
+        for l in self.listeners:
             l.data_loaded(db)
         pass
