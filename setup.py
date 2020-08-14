@@ -1,10 +1,17 @@
 
 import os
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
+
+def get_version():
+    try:
+        import ivpm
+        return ivpm.get_pkg_version(__file__)
+    except:
+        return "0.0.0"
 
 setup(
   name = "pyucis-viewer",
-  packages=['pyucis-viewer'],
+  packages=find_namespace_packages(where='src'),
   package_dir = {'' : 'src'},
   author = "Matthew Ballance",
   author_email = "matt.ballance@gmail.com",
