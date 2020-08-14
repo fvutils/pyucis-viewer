@@ -21,7 +21,7 @@ setup(
   url = "https://github.com/fvutils/pyucis-viewer",
   entry_points={
     'console_scripts': [
-      'pyucis-viewer = pyucis-viewer.__main__:main'
+      'pyucis-viewer = pyucis_viewer.__main__:main'
     ]
   },
   setup_requires=[
