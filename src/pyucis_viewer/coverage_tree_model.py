@@ -10,6 +10,7 @@ from PyQt5.Qt import QStandardItemModel, QStandardItem, Qt
 
 from pyucis_viewer.data_model_listener import DataModelListener
 from ucis.report.coverage_report import CoverageReport
+from ucis.report.coverage_report_builder import CoverageReportBuilder
 
 
 class CoverageTreeModel(QStandardItemModel, DataModelListener):
@@ -35,16 +36,16 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         self.setHeaderData(2, Qt.Horizontal, "Status")
         
     def build_report(self, db)->CoverageReport:
-        report = CoverageReport()
+        report = CoverageReportBuilder.build(db)
         
-        cg1 = report.add_covergroup(CoverageReport.Covergroup("a", "top"))
-        cg1.coverage = 75.0
-        cg1_cp1 = cg1.add_coverpoint(CoverageReport.Coverpoint("cp1"))
-        cg1_cp2 = cg1.add_coverpoint(CoverageReport.Coverpoint("cp2"))
-        cg2 = report.add_covergroup(CoverageReport.Covergroup("b", "top"))
-        cg2.coverage = 35.0
-        cg2_cp1 = cg2.add_coverpoint(CoverageReport.Coverpoint("cp1"))
-        cg2_cp2 = cg2.add_coverpoint(CoverageReport.Coverpoint("cp2"))
+#         cg1 = report.add_covergroup(CoverageReport.Covergroup("a", "top"))
+#         cg1.coverage = 75.0
+#         cg1_cp1 = cg1.add_coverpoint(CoverageReport.Coverpoint("cp1"))
+#         cg1_cp2 = cg1.add_coverpoint(CoverageReport.Coverpoint("cp2"))
+#         cg2 = report.add_covergroup(CoverageReport.Covergroup("b", "top"))
+#         cg2.coverage = 35.0
+#         cg2_cp1 = cg2.add_coverpoint(CoverageReport.Coverpoint("cp1"))
+#         cg2_cp2 = cg2.add_coverpoint(CoverageReport.Coverpoint("cp2"))
         
         return report
     
