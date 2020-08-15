@@ -53,21 +53,19 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         self.clear()
         root = self.invisibleRootItem()
         
-        inst_m : Dict[str,object] = {}
-        
         for cg in self.report.covergroups:
-            inst_n = None
-            if not cg.instname in inst_m.keys():
-                inst_n = QStandardItem("TYPE: " + cg.instname)
-                cov_n = QStandardItem("%0.2f%%" % cg.coverage)
-                cov_p = QStandardItem()
-                cov_p.setData(cg.coverage, QtCore.Qt.UserRole+1000)
-                root.appendRow([inst_n, cov_n, cov_p])
-                inst_m[cg.instname] = inst_n
-            else:
-                inst_n = inst_m[cg.instname]
-                
-            self.populate_covergroup_model(inst_n, cg)
+            cg_n = QStandardItem("TYPE: " + cg.instname)
+            cov_n = QStandardItem("%0.2f%%" % cg.coverage)
+            cov_p = QStandardItem()
+            cov_p.setData(cg.coverage, QtCore.Qt.UserRole+1000)
+            root.appendRow([cg_n, cov_n, cov_p])
+            
+            # Add type coverpoints
+            for cp in cg.coverpoints:
+                self.populate_coverpoint(cg_n, cp)
+
+            for cg_i in cg.covergroups:                
+                self.populate_covergroup_model(cg_n, cg_i)
             
     def populate_covergroup_model(self, inst_n, cg):
         cg_n = QStandardItem("INST: " + cg.name)
@@ -91,7 +89,11 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
             
 
     def populate_coverpoint_bin(self, cp_n, bn):
-        pass
+        bn_n = QStandardItem(bn.name)
+        cov_n = QStandardItem("%d%%" % bn.count)
+        cov_p = QStandardItem()
+        cov_p.setData(bn.count, QtCore.Qt.UserRole+2000)
+        cp_n.appendRow([bn_n, cov_n, cov_p])
     
 
     

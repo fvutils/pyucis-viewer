@@ -87,13 +87,25 @@ class MainWindow(QMainWindow, DataModelListener):
         
     class ProgressDelegate(QtWidgets.QStyledItemDelegate):
         def paint(self, painter, option, index):
-            progress = index.data(QtCore.Qt.UserRole+1000)
-            opt = QtWidgets.QStyleOptionProgressBar()
-            opt.rect = option.rect
-            opt.minimum = 0
-            opt.maximum = 100
-            opt.progress = progress
-            opt.text = "{}%".format(progress)
-            opt.textVisible = True
-            QtWidgets.QApplication.style().drawControl(QtWidgets.QStyle.CE_ProgressBar, opt, painter)
+            if index.data(QtCore.Qt.UserRole+1000) is not None:
+                progress = index.data(QtCore.Qt.UserRole+1000)
+                opt = QtWidgets.QStyleOptionProgressBar()
+                opt.rect = option.rect
+                opt.minimum = 0
+                opt.maximum = 100
+                opt.progress = progress
+                opt.text = "{}%".format(progress)
+                opt.textVisible = True
+                QtWidgets.QApplication.style().drawControl(QtWidgets.QStyle.CE_ProgressBar, opt, painter)
+            elif index.data(QtCore.Qt.UserRole+2000) is not None:
+                progress = index.data(QtCore.Qt.UserRole+2000)
+                opt = QtWidgets.QStyleOptionProgressBar()
+                opt.rect = option.rect
+                opt.minimum = 0
+                opt.maximum = 100
+                opt.progress = 100 if progress > 0 else 0
+                opt.text = "{}".format(progress)
+                opt.textVisible = True
+                QtWidgets.QApplication.style().drawControl(QtWidgets.QStyle.CE_ProgressBar, opt, painter)
+                
         
