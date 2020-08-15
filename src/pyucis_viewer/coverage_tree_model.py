@@ -37,16 +37,6 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         
     def build_report(self, db)->CoverageReport:
         report = CoverageReportBuilder.build(db)
-        
-#         cg1 = report.add_covergroup(CoverageReport.Covergroup("a", "top"))
-#         cg1.coverage = 75.0
-#         cg1_cp1 = cg1.add_coverpoint(CoverageReport.Coverpoint("cp1"))
-#         cg1_cp2 = cg1.add_coverpoint(CoverageReport.Coverpoint("cp2"))
-#         cg2 = report.add_covergroup(CoverageReport.Covergroup("b", "top"))
-#         cg2.coverage = 35.0
-#         cg2_cp1 = cg2.add_coverpoint(CoverageReport.Coverpoint("cp1"))
-#         cg2_cp2 = cg2.add_coverpoint(CoverageReport.Coverpoint("cp2"))
-        
         return report
     
     def populate_model(self):
@@ -90,7 +80,7 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
 
     def populate_coverpoint_bin(self, cp_n, bn):
         bn_n = QStandardItem(bn.name)
-        cov_n = QStandardItem("%d%%" % bn.count)
+        cov_n = QStandardItem("%d" % bn.count)
         cov_p = QStandardItem()
         cov_p.setData(bn.count, QtCore.Qt.UserRole+2000)
         cp_n.appendRow([bn_n, cov_n, cov_p])
