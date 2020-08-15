@@ -95,8 +95,3 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         cov_p.setData(bn.count, QtCore.Qt.UserRole+2000)
         cp_n.appendRow([bn_n, cov_n, cov_p])
     
-
-    
-    
-
-        
