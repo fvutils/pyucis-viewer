@@ -11,6 +11,7 @@ def get_version():
 
 setup(
   name = "pyucis-viewer",
+  version=get_version(),
   packages=find_namespace_packages(where='src'),
   package_dir = {'' : 'src'},
   author = "Matthew Ballance",
