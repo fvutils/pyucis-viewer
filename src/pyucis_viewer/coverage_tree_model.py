@@ -53,6 +53,9 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
             # Add type coverpoints
             for cp in cg.coverpoints:
                 self.populate_coverpoint(cg_n, cp)
+                
+            for cr in cg.crosses:
+                self.populate_cross(cg_n, cr)
 
             for cg_i in cg.covergroups:                
                 self.populate_covergroup_model(cg_n, cg_i)
@@ -66,6 +69,9 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         
         for cp in cg.coverpoints:
             self.populate_coverpoint(cg_n, cp)
+            
+        for cr in cg.crosses:
+            self.populate_cross(cg_n, cr)
     
     def populate_coverpoint(self, cg_n, cp):
         cp_n = QStandardItem("CVP: " + cp.name)
@@ -84,4 +90,14 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         cov_p = QStandardItem()
         cov_p.setData(bn.count, QtCore.Qt.UserRole+2000)
         cp_n.appendRow([bn_n, cov_n, cov_p])
+        
+    def populate_cross(self, cg_n, cr):
+        cr_n = QStandardItem("CROSS: " + cr.name)
+        cov_n = QStandardItem("%0.2f%%" % cr.coverage)
+        cov_p = QStandardItem()
+        cov_p.setData(cr.coverage, QtCore.Qt.UserRole+1000)
+        cg_n.appendRow([cr_n, cov_n, cov_p])
+        
+        for bn in cr.bins:
+            self.populate_coverpoint_bin(cr_n, bn)
     
