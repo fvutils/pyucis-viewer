@@ -17,6 +17,9 @@ setup(
   author = "Matthew Ballance",
   author_email = "matt.ballance@gmail.com",
   description = ("PyUCIS Viewer QT5-based viewer for UCIS data."),
+  long_description = """
+  Extremely simple graphical viewer for coverage data in a UCIS database
+  """,
   license = "Apache 2.0",
   keywords = ["SystemVerilog", "Verilog", "RTL", "Coverage"],
   url = "https://github.com/fvutils/pyucis-viewer",
@@ -31,7 +34,7 @@ setup(
   ],
   install_requires=[
     'pyqt5',
-    'pyucis'
+    'pyucis>=0.0.6'
   ],
 )
 

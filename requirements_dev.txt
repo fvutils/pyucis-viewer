@@ -5,5 +5,5 @@ pylint
 flake8
 pytest
 pytest-cov
--e git+https://github.com/fvutils/pyucis.git#egg=pyucis
+pyucis>=0.0.6
 
