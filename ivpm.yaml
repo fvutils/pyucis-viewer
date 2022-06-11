@@ -1,0 +1,30 @@
+package:
+    name: pyvsc
+    version: None
+    deps:
+        - name: pyucis
+          src: pypi
+        - name: pyqt5
+          src: pypi
+    dev-deps:
+        - name: pyqt5
+          src: pypi
+        - name: pyucis
+          url: https://github.com/fvutils/pyucis.git
+        - name: pylint
+          src: pypi
+        - name: flake8
+          src: pypi
+        - name: pytest
+          src: pypi
+        - name: pytest-cov
+          src: pypi
+        - name: Sphinx
+          src: pypi
+        - name: sphinx-rtd-theme
+          src: pypi
+        - name: cairosvg
+          src: pypi
+        - name: sphinx-argparse
+          src: pypi
+
