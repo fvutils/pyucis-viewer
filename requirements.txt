@@ -1,4 +1,0 @@
-
-pyqt5
--e git+https://github.com/fvutils/pyucis.git#egg=pyucis
-
