@@ -47,7 +47,7 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
             cg_n = QStandardItem("TYPE: " + cg.instname)
             cov_n = QStandardItem("%0.2f%%" % cg.coverage)
             cov_p = QStandardItem()
-            cov_p.setData(cg.coverage, QtCore.Qt.UserRole+1000)
+            cov_p.setData(round(cg.coverage, 2), QtCore.Qt.UserRole+1000)
             root.appendRow([cg_n, cov_n, cov_p])
             
             # Add type coverpoints
@@ -64,7 +64,7 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         cg_n = QStandardItem("INST: " + cg.name)
         cov_n = QStandardItem("%0.2f%%" % cg.coverage)
         cov_p = QStandardItem()
-        cov_p.setData(cg.coverage, QtCore.Qt.UserRole+1000)
+        cov_p.setData(round(cg.coverage, 2), QtCore.Qt.UserRole+1000)
         inst_n.appendRow([cg_n, cov_n, cov_p])
         
         for cp in cg.coverpoints:
@@ -77,7 +77,7 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         cp_n = QStandardItem("CVP: " + cp.name)
         cov_n = QStandardItem("%0.2f%%" % cp.coverage)
         cov_p = QStandardItem()
-        cov_p.setData(cp.coverage, QtCore.Qt.UserRole+1000)
+        cov_p.setData(round(cp.coverage, 2), QtCore.Qt.UserRole+1000)
         cg_n.appendRow([cp_n, cov_n, cov_p])
         
         for bn in cp.bins:
@@ -95,7 +95,7 @@ class CoverageTreeModel(QStandardItemModel, DataModelListener):
         cr_n = QStandardItem("CROSS: " + cr.name)
         cov_n = QStandardItem("%0.2f%%" % cr.coverage)
         cov_p = QStandardItem()
-        cov_p.setData(cr.coverage, QtCore.Qt.UserRole+1000)
+        cov_p.setData(round(cr.coverage, 2), QtCore.Qt.UserRole+1000)
         cg_n.appendRow([cr_n, cov_n, cov_p])
         
         for bn in cr.bins:
