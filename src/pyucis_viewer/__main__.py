@@ -26,7 +26,7 @@ def main():
     data_model = DataModel()
    
     db = None 
-    if args.file.endswith(".xml"):
+    if args.file.endswith(".xml") or args.file.endswith(".xml.gz"):
         try:
             db = XmlFactory.read(args.file)
         except Exception as e:
