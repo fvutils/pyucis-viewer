@@ -88,7 +88,7 @@ class MainWindow(QMainWindow, DataModelListener):
     class ProgressDelegate(QtWidgets.QStyledItemDelegate):
         def paint(self, painter, option, index):
             if index.data(QtCore.Qt.UserRole+1000) is not None:
-                progress = index.data(QtCore.Qt.UserRole+1000)
+                progress = int(index.data(QtCore.Qt.UserRole+1000))
                 opt = QtWidgets.QStyleOptionProgressBar()
                 opt.rect = option.rect
                 opt.minimum = 0
