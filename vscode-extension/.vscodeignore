@@ -1,0 +1,8 @@
+node_modules/
+src/
+*.vsix
+.vscode-test/
+tsconfig.json
+.eslintrc.js
+*.ts
+*.map

@@ -1,0 +1,265 @@
+{
+  "name": "pyucis-coverage-explorer",
+  "displayName": "PyUCIS Coverage Explorer",
+  "description": "Navigate and understand functional and code coverage data stored in pyucis SQLite databases",
+  "version": "0.1.0",
+  "publisher": "fvutils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fvutils/pyucis-viewer-vscode"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Testing",
+    "Visualization",
+    "Data Science"
+  ],
+  "keywords": [
+    "coverage",
+    "ucis",
+    "verification",
+    "systemverilog",
+    "uvm"
+  ],
+  "activationEvents": [
+    "onLanguage:systemverilog",
+    "onLanguage:verilog",
+    "workspaceContains:**/*.ucisdb"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pyucis.openDatabase",
+        "title": "PyUCIS: Open Coverage Database",
+        "icon": "$(database)"
+      },
+      {
+        "command": "pyucis.activateDatabase",
+        "title": "PyUCIS: Activate Database"
+      },
+      {
+        "command": "pyucis.closeDatabase",
+        "title": "PyUCIS: Close Database",
+        "icon": "$(close)"
+      },
+      {
+        "command": "pyucis.refreshDatabase",
+        "title": "PyUCIS: Refresh Database",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "pyucis.rescanWorkspace",
+        "title": "PyUCIS: Rescan Workspace for Databases",
+        "icon": "$(search)"
+      },
+      {
+        "command": "pyucis.showDashboard",
+        "title": "PyUCIS: Show Coverage Dashboard",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "pyucis.showUncovered",
+        "title": "PyUCIS: Show Uncovered Items",
+        "icon": "$(warning)"
+      },
+      {
+        "command": "pyucis.showAll",
+        "title": "PyUCIS: Show All Items",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "pyucis.showCovered",
+        "title": "PyUCIS: Show Covered Items",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "pyucis.refreshCoverage",
+        "title": "PyUCIS: Refresh Coverage View",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "pyucis.searchScopes",
+        "title": "PyUCIS: Search Scopes",
+        "icon": "$(search)"
+      },
+      {
+        "command": "pyucis.toggleDecorations",
+        "title": "PyUCIS: Toggle Source Decorations",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "pyucis.enableDecorations",
+        "title": "PyUCIS: Enable Source Decorations"
+      },
+      {
+        "command": "pyucis.disableDecorations",
+        "title": "PyUCIS: Disable Source Decorations"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "pyucis.databases",
+          "name": "Coverage Databases",
+          "icon": "$(database)",
+          "contextualTitle": "PyUCIS Coverage"
+        },
+        {
+          "id": "pyucis.coverage",
+          "name": "Coverage Hierarchy",
+          "icon": "$(symbol-class)",
+          "contextualTitle": "PyUCIS Coverage"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "pyucis.databases",
+        "contents": "No coverage databases found in workspace.\n[Open Database](command:pyucis.openDatabase)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "pyucis.openDatabase",
+          "when": "view == pyucis.databases",
+          "group": "navigation"
+        },
+        {
+          "command": "pyucis.rescanWorkspace",
+          "when": "view == pyucis.databases",
+          "group": "navigation"
+        },
+        {
+          "command": "pyucis.refreshDatabase",
+          "when": "view == pyucis.coverage",
+          "group": "navigation"
+        },
+        {
+          "command": "pyucis.showDashboard",
+          "when": "view == pyucis.coverage",
+          "group": "navigation"
+        },
+        {
+          "command": "pyucis.showUncovered",
+          "when": "view == pyucis.coverage",
+          "group": "1_filter@1"
+        },
+        {
+          "command": "pyucis.showAll",
+          "when": "view == pyucis.coverage",
+          "group": "1_filter@2"
+        },
+        {
+          "command": "pyucis.showCovered",
+          "when": "view == pyucis.coverage",
+          "group": "1_filter@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "pyucis.activateDatabase",
+          "when": "view == pyucis.databases && viewItem == database",
+          "group": "inline"
+        },
+        {
+          "command": "pyucis.closeDatabase",
+          "when": "view == pyucis.databases && viewItem == database",
+          "group": "1_actions"
+        },
+        {
+          "command": "pyucis.refreshDatabase",
+          "when": "view == pyucis.databases && viewItem == database",
+          "group": "1_actions"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PyUCIS Coverage Explorer",
+      "properties": {
+        "pyucis.autoDetect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically discover .ucisdb files in workspace"
+        },
+        "pyucis.filePatterns": {
+          "type": "array",
+          "default": [
+            "**/*.ucisdb"
+          ],
+          "description": "Glob patterns for database discovery"
+        },
+        "pyucis.coverageGoal": {
+          "type": "number",
+          "default": 100,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Target coverage percentage for alerts"
+        },
+        "pyucis.warningThreshold": {
+          "type": "number",
+          "default": 80,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Coverage percentage below which items show warning"
+        },
+        "pyucis.pathMappings": {
+          "type": "object",
+          "default": {},
+          "description": "Map database source paths to workspace paths"
+        },
+        "pyucis.showDecorations": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable source gutter decorations by default"
+        },
+        "pyucis.excludeIgnoredBins": {
+          "type": "boolean",
+          "default": true,
+          "description": "Exclude IGNOREBIN from coverage calculations"
+        },
+        "pyucis.excludeIllegalBins": {
+          "type": "boolean",
+          "default": true,
+          "description": "Exclude ILLEGALBIN from coverage calculations"
+        },
+        "pyucis.defaultFilter": {
+          "type": "string",
+          "enum": [
+            "all",
+            "uncovered",
+            "covered"
+          ],
+          "default": "all",
+          "description": "Default status filter"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./dist/test/runTest.js",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/sql.js": "^1.4.9",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vscode/test-electron": "^2.3.0",
+    "@vscode/vsce": "^2.32.0",
+    "eslint": "^8.40.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "sql.js": "^1.8.0"
+  }
+}

@@ -19,7 +19,8 @@ jobs:
         ./packages/python/bin/python3 -m pip install wheel twine
         ./packages/python/bin/python3 -m pip install pip setuptools --upgrade
         export BUILD_NUM=$GITHUB_RUN_ID
-        ./packages/python/bin/python3 setup.py bdist_wheel --universal
+        cd python
+        ../packages/python/bin/python3 setup.py bdist_wheel --universal
     - name: Build Docs
       run: |
         make html
@@ -37,4 +38,5 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+        packages-dir: python/dist/
 
